@@ -15,11 +15,11 @@ function Dashboard() {
         <br />
         <br />
         <button style={auth ? { background: "green" } : { background: "red" }}>
-          {auth ? "O'tdi" : "Register"}
+          {auth ? "Access" : "Register"}
         </button>
         <Link to={"/dashboard"}>Dashboard</Link>
         <Link to={"/"}>Home</Link>
-        <button onClick={() => dispatch(authLogOut())}>Access</button>
+        <button onClick={() => dispatch(authLogOut())}>LogOut</button>
         <br />
         <br />
         <br />
