@@ -3,3 +3,18 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+.login-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.project-name {
+  text-align: center;
+  color: rgb(29, 41, 68);
+}
+.copy-btn {
+  margin-top: 15px;
+}

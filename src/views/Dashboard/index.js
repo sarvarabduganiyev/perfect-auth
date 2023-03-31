@@ -1,30 +1,55 @@
-import { Link } from "react-router-dom";
-import { authLogOut } from "../../redux/slices/auth";
-import { useDispatch, useSelector } from "react-redux";
-
+import { Table } from "antd";
+import React from "react";
+import { useEffect } from "react";
+import getAllService from "./../../services/table.service";
 function Dashboard() {
-  const auth = useSelector((state) => state.auth.accessToken);
-  const dispatch = useDispatch();
+  const [data, setData] = React.useState("");
+  const dataSource = [
+    {
+      key: "1",
+      id: "Mike",
+      age: 32,
+      address: "10 Downing Street",
+    },
+    {
+      key: "2",
+      id: "John",
+      age: 42,
+      address: "10 Downing Street",
+    },
+  ];
+  const columns = [
+    {
+      title: "id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+  ];
+
+  useEffect(() => {
+    getAllService.table().then((res) => {
+      setData(res);
+    });
+  }, []);
+
   return (
     <div>
-      <Link to={"/about"}>About</Link>
-      <div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <button style={auth ? { background: "green" } : { background: "red" }}>
-          {auth ? "Access" : "Register"}
-        </button>
-        <Link to={"/dashboard"}>Dashboard</Link>
-        <Link to={"/"}>Home</Link>
-        <button onClick={() => dispatch(authLogOut())}>LogOut</button>
-        <br />
-        <br />
-        <br />
-      </div>
-      <div>Dashboard</div>
+      <Table
+        style={{ marginTop: "20px" }}
+        dataSource={data.map((items) => ({ key: items, id: items.id, }))}
+        columns={columns}
+      />
+      ;
     </div>
   );
 }
