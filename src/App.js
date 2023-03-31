@@ -1,10 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 import Login from "./views/login";
 import ProtectedRoute from "./views/protected-route/protected-route";
-import NotFound from "./views/not-found/";
 import Dashboard from "./views/Dashboard/";
-import About from "./views/About";
 import LoginLayout from "./views/layout/login-layout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,8 +22,6 @@ function App() {
           />
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/about" element={<About />} />
-            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

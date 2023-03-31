@@ -43,7 +43,7 @@ function Login() {
     authService
       .login(body)
       .then((res) => {
-        dispatch(authTokenReducer(res.token));
+        dispatch(authTokenReducer(res.data.token));
         toast.success("Successful", {
           position: "top-right",
           autoClose: 5000,
@@ -70,7 +70,7 @@ function Login() {
           progress: undefined,
           theme: "colored",
         });
-      });
+      }).finally(() => setLoading(false));
     console.log(values);
   };
   const copyCredentials = (event, item) => {

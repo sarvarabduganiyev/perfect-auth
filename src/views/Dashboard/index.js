@@ -1,23 +1,16 @@
-import { Table } from "antd";
+import { Table, Pagination } from "antd";
 import React from "react";
-import { useEffect } from "react";
-import getAllService from "./../../services/table.service";
+import getAllService from "../../services/table.service"
 function Dashboard() {
-  const [data, setData] = React.useState("");
-  const dataSource = [
-    {
-      key: "1",
-      id: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-    },
-    {
-      key: "2",
-      id: "John",
-      age: 42,
-      address: "10 Downing Street",
-    },
-  ];
+
+  const [data, setData] = React.useState([]);
+  const [loading, setLoading] = React.useState(false);
+  const [current, setCurrent] = React.useState(1);
+
+  const onChange = (page) => {
+    setCurrent(page)
+  }
+
   const columns = [
     {
       title: "id",
@@ -25,31 +18,39 @@ function Dashboard() {
       key: "id",
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "name",
+      dataIndex: "name",
+      key: "name",
+      render: (text) => {
+        return <p>{text}</p>
+      }
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "unit",
+      dataIndex: "unit",
+      key: "unit",
     },
   ];
 
-  useEffect(() => {
-    getAllService.table().then((res) => {
-      setData(res);
+  React.useEffect(() => {
+    setLoading(true)
+    getAllService.table(current).then((res) => {
+      setData(res.data);
+    }).finally(() => {
+      setLoading(false)
     });
-  }, []);
+  }, [current]);
 
   return (
     <div>
       <Table
-        style={{ marginTop: "20px" }}
-        dataSource={data.map((items) => ({ key: items, id: items.id, }))}
+        style={{ margin: "20px" }}
+        dataSource={data.items}
         columns={columns}
+        loading={loading}
+        pagination={false}
       />
-      ;
+      <Pagination current={current} onChange={onChange} pageSize={100} showSizeChanger={false} total={data.total_count} />;
     </div>
   );
 }

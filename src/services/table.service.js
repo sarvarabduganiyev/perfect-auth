@@ -1,6 +1,6 @@
 import service from "./request";
 const getAllService = {
-  table: () => service.get("/variations"),
+  table: (current) => service.get(`/variations?page=${current}`),
 };
 
 export default getAllService;
